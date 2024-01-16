@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs } from "@remix-run/cloudflare";
-import { Link, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { getEvent } from "~/db.server/queries";
 
 export async function loader({ context, params }: LoaderFunctionArgs) {
@@ -15,10 +15,8 @@ export default function Event() {
   const { event } = useLoaderData<typeof loader>();
   return (
     <div>
-      <Link to="/">Back to Events</Link>
-
       <div style={{ display: "flex", flexDirection: "row" }}>
-        <div style={{ width: "80ch" }}>
+        <div style={{ minWidth: 300, width: "80ch" }}>
           <h1>{event.name}</h1>
           <p>{event.date}</p>
           <p>{event.description}</p>

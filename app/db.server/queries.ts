@@ -1,6 +1,6 @@
 import { AppLoadContext } from "@remix-run/cloudflare";
 
-interface Env {
+export interface Env {
   DB: D1Database;
 }
 
@@ -66,7 +66,7 @@ export async function getEvent({
         LEFT JOIN sponsors
             ON events.sponsor_id = sponsors.id
         LEFT JOIN speakers
-            ON events.id = speakers.event_id
+            ON events.speaker_id = speakers.id
     WHERE  events.id = ?`
   )
     .bind(id)
@@ -74,4 +74,44 @@ export async function getEvent({
 
   // @ts-expect-error -- use zod or something
   return event;
+}
+
+export async function getSponsors({
+  context,
+}: {
+  context: AppLoadContext;
+}): Promise<
+  {
+    id: string;
+    name: string;
+  }[]
+> {
+  const env = context.env as Env;
+
+  const { results } = await env.DB.prepare(
+    `SELECT id, name FROM sponsors`
+  ).all();
+
+  // @ts-expect-error -- use zod or something
+  return results;
+}
+
+export async function getSpeakers({
+  context,
+}: {
+  context: AppLoadContext;
+}): Promise<
+  {
+    id: string;
+    name: string;
+  }[]
+> {
+  const env = context.env as Env;
+
+  const { results } = await env.DB.prepare(
+    `SELECT id, name FROM speakers`
+  ).all();
+
+  // @ts-expect-error -- use zod or something
+  return results;
 }
