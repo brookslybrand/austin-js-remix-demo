@@ -37,12 +37,6 @@ npm run dev
 - `events.tsx`
 - `events._index.tsx`
 
-5.
+5. Mutate data
 
-Things to touch on
-
-- Loaders
-- Request/Response objects
-- Forms/actions
-- Nested Routing
-- SSR
+- `events.new.tsx`
